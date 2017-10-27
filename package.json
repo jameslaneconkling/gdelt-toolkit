@@ -1,7 +1,7 @@
 {
   "name": "gdelt-toolkit",
   "version": "0.0.1",
-  "description": "",
+  "description": "tools for streaming, linting, and parsing GDELT data",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/jameslaneconkling/gdelt-toolkit/issues"
   },
-  "homepage": "https://github.com/jameslaneconkling/gdelt-toolkit#readme"
+  "homepage": "https://github.com/jameslaneconkling/gdelt-toolkit#readme",
+  "dependencies": {
+    "csv-parse": "^2.0.0",
+    "fs": "0.0.1-security",
+    "hyperquest": "^2.1.2",
+    "through2": "^2.0.3",
+    "unzipper": "^0.8.9"
+  }
 }
