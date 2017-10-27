@@ -1,0 +1,22 @@
+{
+  "name": "gdelt-toolkit",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jameslaneconkling/gdelt-toolkit.git"
+  },
+  "keywords": [
+    "gdelt"
+  ],
+  "author": "https://github.com/jameslaneconkling",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jameslaneconkling/gdelt-toolkit/issues"
+  },
+  "homepage": "https://github.com/jameslaneconkling/gdelt-toolkit#readme"
+}
