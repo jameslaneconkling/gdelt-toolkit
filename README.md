@@ -1,10 +1,12 @@
-# GDELT Toolkit
+# `GDELT Toolkit`
 
+```
 Tools for downloading, parsing, and linting [GDELT](gdeltproject.org) data, with CLI and Module Bindings
+```
 
 ---
 
-###CLI API
+# CLI API
 
 ```bash
 npm install -g gdelt
@@ -23,7 +25,7 @@ Options:
   --help     Show help                                                 [boolean]
 ```
 
-**Download**
+### Download
 
 ```bash
 gdelt download
@@ -35,7 +37,7 @@ Options:
   --format, -f    output format        [choices: "json", "n3"] [default: "json"]
 ```
 
-**Lint**
+### Lint
 
 ```bash
 gdelt lint
@@ -46,7 +48,7 @@ Options:
   --datetime, -d  datetime                             [default: 20150218230000]
 ```
 
-**Clean Cache**
+### Clean Cache
 
 ```
 clean
