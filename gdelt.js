@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const fetch = require('./fetch');
+const download = require('./download');
 const lint = require('./lint');
 
 
@@ -19,9 +19,9 @@ const format = {
 require('yargs')
   .usage('$0 <cmd> [args]')
   .command(
-    'fetch', 'get gdelt by datetime',
+    'download', 'download gdelt by datetime',
     { datetime, format },
-    argv => fetch(argv).pipe(process.stdout)
+    argv => download(argv).pipe(process.stdout)
   )
   .command(
     'lint',
