@@ -1,12 +1,20 @@
-const JSONStream = require('JSONStream');
-const get = require('./lib/get');
-const {
-  entry2JSON,
-} = require('./lib/parse');
-const fieldTransform = require('./config/fieldTransform');
+#!/usr/bin/env node
+const fetch = require('./fetch');
 
 
-get(20150218230000)
-  .pipe(entry2JSON(fieldTransform))
-  .pipe(JSONStream.stringify('[', ',\n', ']', 2))
-  .pipe(process.stdout);
+const datetime = {
+  alias: 'd',
+  default: 20150218230000,
+  describe: 'datetime'
+};
+
+
+require('yargs')
+  .usage('$0 <cmd> [args]')
+  .command(
+    'fetch', 'get gdelt by datetime',
+    { datetime },
+    argv => fetch(argv).pipe(process.stdout)
+  )
+  .help()
+  .argv;

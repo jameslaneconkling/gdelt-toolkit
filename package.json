@@ -26,6 +26,7 @@
     "hyperquest": "^2.1.2",
     "ramda": "^0.25.0",
     "through2": "^2.0.3",
-    "unzipper": "^0.8.9"
+    "unzipper": "^0.8.9",
+    "yargs": "^10.0.3"
   }
 }
