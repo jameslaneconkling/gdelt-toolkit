@@ -37,4 +37,5 @@ require('yargs')
   )
   .demand(1, 'Please specify a command')
   .help()
+  .strict()
   .argv;
