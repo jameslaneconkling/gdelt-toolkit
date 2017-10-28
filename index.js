@@ -16,5 +16,11 @@ require('yargs')
     { datetime },
     argv => fetch(argv).pipe(process.stdout)
   )
+  .command(
+    'clean',
+    'clean cache',
+    {},
+    require('./clean')
+  )
   .help()
   .argv;
