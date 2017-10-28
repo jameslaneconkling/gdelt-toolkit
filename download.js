@@ -10,9 +10,13 @@ const {
 const prefixes = require('./config/rdfPrefixes');
 const jsonTransform = require('./config/jsonTransform');
 const tripleTransform = require('./config/tripleTransform');
+const {
+  getUTCDate,
+  utcDate2GDELTDate
+} = require('./utils/datetime');
 
 
-module.exports = ({ format, datetime }) => {
+module.exports = ({ format, datetime = utcDate2GDELTDate(getUTCDate()) }) => {
   if (format === 'json') {
     return get(datetime)
       .pipe(entry2JSON(jsonTransform))

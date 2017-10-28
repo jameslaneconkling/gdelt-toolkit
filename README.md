@@ -22,7 +22,7 @@ Commands:
 gdelt download
 
 Options:
-  --datetime, -d  datetime                             [default: 20150218230000]
+  --datetime, -d  datetime             [defaults to today]
   --format, -f    output format        [choices: "json", "n3"] [default: "json"]
 ```
 

@@ -5,8 +5,7 @@ const lint = require('./lint');
 
 const datetime = {
   alias: 'd',
-  default: 20150218230000,
-  describe: 'datetime'
+  describe: 'datetime [defaults to today]'
 };
 const format = {
   alias: 'f',
