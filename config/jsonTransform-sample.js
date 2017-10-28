@@ -1,5 +1,5 @@
 /**
- * example field map transform:
+ * example json transform:
  * - camel case all field names
  * - transform 'Day' field to ISO 8601
  * - don't include monthYear, year, factionDate

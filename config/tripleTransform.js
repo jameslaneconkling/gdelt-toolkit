@@ -8,7 +8,7 @@ const fipsCountryCodes = require('../data/fipsCountryCodes');
 const uuidv4 = require('uuid/v4');
 
 /**
- * predicate map transform:
+ * triple transform:
  *
  * a smarter transform that
  * - drops redundant fields like Day/MonthYear/Year/FractionDate

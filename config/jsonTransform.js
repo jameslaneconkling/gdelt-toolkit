@@ -8,7 +8,7 @@ const fipsCountryCodes = require('../data/fipsCountryCodes');
 
 
 /**
- * field map transform:
+ * json transform:
  *
  * a smarter transform that
  * - drops redundant fields like Day/MonthYear/Year/FractionDate

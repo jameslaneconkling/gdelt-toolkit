@@ -8,19 +8,19 @@ const {
   json2Triple
 } = require('./lib/parse');
 const prefixes = require('./config/rdfPrefixes');
-const predicateTransform = require('./config/predicateTransform');
-const fieldTransform = require('./config/fieldTransform');
+const jsonTransform = require('./config/jsonTransform');
+const tripleTransform = require('./config/tripleTransform');
 
 
 module.exports = ({ format, datetime }) => {
   if (format === 'json') {
     return get(datetime)
-      .pipe(entry2JSON(fieldTransform))
+      .pipe(entry2JSON(jsonTransform))
       .pipe(JSONStream.stringify('[', ',\n', ']', 2));
   } else if (format === 'n3') {
     return get(datetime)
       .pipe(entry2JSON())
-      .pipe(json2Triple(predicateTransform, 'gdelt:Event'))
+      .pipe(json2Triple(tripleTransform, 'gdelt:Event'))
       .pipe(new StreamWriter({ prefixes }));
   }
 };

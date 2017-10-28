@@ -1,5 +1,5 @@
 /**
- * example predicate map transform:
+ * example triple transform:
  * - transform 'Day' field to ISO 8601
  * - don't include monthYear, year, factionDate
  */
