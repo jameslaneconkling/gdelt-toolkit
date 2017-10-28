@@ -7,13 +7,19 @@ const datetime = {
   default: 20150218230000,
   describe: 'datetime'
 };
+const format = {
+  alias: 'f',
+  choices: ['json', 'n3'],
+  default: 'json',
+  describe: 'output format'
+};
 
 
 require('yargs')
   .usage('$0 <cmd> [args]')
   .command(
     'fetch', 'get gdelt by datetime',
-    { datetime },
+    { datetime, format },
     argv => fetch(argv).pipe(process.stdout)
   )
   .command(
@@ -22,5 +28,6 @@ require('yargs')
     {},
     require('./clean')
   )
+  .demand(1, 'Please specify a command')
   .help()
   .argv;
