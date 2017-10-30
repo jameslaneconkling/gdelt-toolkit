@@ -1,6 +1,6 @@
 # GDELT TOOLKIT
 
-Tools for downloading, parsing, and linting [GDELT](gdeltproject.org) data, with CLI and Module Bindings
+Tools for downloading, parsing, and linting [GDELT](//www.gdeltproject.org) data, with CLI and Module Bindings
 
 ---
 
