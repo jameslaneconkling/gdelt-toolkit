@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const download = require('./download');
-const lint = require('./lint');
+const download = require('../src/download');
+const lint = require('../src/lint');
 
 
 const datetime = {
@@ -32,7 +32,7 @@ require('yargs')
     'clean',
     'clean cache',
     {},
-    require('./clean')
+    require('../src/clean')
   )
   .demand(1, 'Please specify a command')
   .help()

@@ -11,7 +11,7 @@ module.exports = date => {
   const outStream = through.obj();
   const file = `${date}.export.CSV.zip`;
 
-  fs.createReadStream(`${__dirname}/../cache/${file}`)
+  fs.createReadStream(`${__dirname}/../../cache/${file}`)
     .on('error', error => {
       if (error.code === 'ENOENT') {
         // cache miss
@@ -24,7 +24,7 @@ module.exports = date => {
           .on('error', error => console.error(error));
 
         // write to cache
-        fileRequestStream.pipe(fs.createWriteStream(`${__dirname}/../cache/${file}`));
+        fileRequestStream.pipe(fs.createWriteStream(`${__dirname}/../../cache/${file}`));
 
         // pipe to program
         fileRequestStream.pipe(fileStream);
