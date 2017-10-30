@@ -1,6 +1,6 @@
 {
   "name": "gdelt-toolkit",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "tools for streaming, linting, and parsing GDELT data",
   "main": "index.js",
   "scripts": {
