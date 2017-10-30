@@ -6,7 +6,7 @@ Tools for downloading, parsing, and linting [GDELT](gdeltproject.org) data, with
 
 ### CLI API
 ```bash
-npm install -g gdelt
+npm install -g gdelt-toolkit
 
 gdelt <cmd> [args]
 
@@ -37,7 +37,7 @@ Options:
 
 **Clean Cache**
 
-```
+```bash
 clean
 
 clean cache
