@@ -1,7 +1,7 @@
 #!/usr/bin/env node
-
 const download = require('../src/download');
 const lint = require('../src/lint');
+const list = require('../src/list');
 
 
 const datetime = {
@@ -28,6 +28,12 @@ require('yargs')
     'lint gdelt by datetime',
     { datetime },
     argv => lint(argv).pipe(process.stdout)
+  )
+  .command(
+    'list',
+    'list all available gdelt files',
+    {},
+    argv => list(argv).pipe(process.stdout)
   )
   .command(
     'clean',

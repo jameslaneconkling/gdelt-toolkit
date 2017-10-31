@@ -1,5 +1,7 @@
 const JSONStream = require('JSONStream');
-const get = require('./lib/get');
+const {
+  getFile
+} = require('./lib/get');
 const {
   entry2JSON
 } = require('./lib/parse');
@@ -11,7 +13,7 @@ const {
 } = require('./utils/datetime');
 
 
-module.exports = ({ datetime = utcDate2GDELTDate(getUTCDate()) }) => get(datetime)
+module.exports = ({ datetime = utcDate2GDELTDate(getUTCDate()) }) => getFile(datetime)
   .pipe(entry2JSON())
   .pipe(linter(linters))
   .pipe(JSONStream.stringify('[', ',\n', ']'));

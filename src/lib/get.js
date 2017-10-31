@@ -1,12 +1,13 @@
 const hyperquest = require('hyperquest');
 const fs = require('fs');
 const through = require('through2');
+const split = require('split2');
 const unzipper = require('unzipper');
 const csvParse = require('csv-parse');
 const BASE_URL = 'http://data.gdeltproject.org/gdeltv2/';
 
 
-module.exports = date => {
+exports.getFile = date => {
   const fileStream = through.obj();
   const outStream = through.obj();
   const file = `${date}.export.CSV.zip`;
@@ -45,4 +46,15 @@ module.exports = date => {
     ));
 
   return outStream;
+};
+
+
+exports.getFiles = () => {
+  return hyperquest.get('http://data.gdeltproject.org/gdeltv2/masterfilelist.txt')
+    .pipe(split())
+    .pipe(through.obj(function(chunk, enc, next) {
+      const [id, checksum, url] = chunk.split(' ');
+
+      next(null, { id, checksum, url }); // TODO - format datetime
+    }));
 };

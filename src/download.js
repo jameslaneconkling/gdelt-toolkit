@@ -2,7 +2,9 @@ const JSONStream = require('JSONStream');
 const {
   StreamWriter
 } = require('n3');
-const get = require('./lib/get');
+const {
+  getFile
+} = require('./lib/get');
 const {
   entry2JSON,
   json2Triple
@@ -18,11 +20,11 @@ const {
 
 module.exports = ({ format, datetime = utcDate2GDELTDate(getUTCDate()) }) => {
   if (format === 'json') {
-    return get(datetime)
+    return getFile(datetime)
       .pipe(entry2JSON(jsonTransform))
       .pipe(JSONStream.stringify('[', ',\n', ']', 2));
   } else if (format === 'n3') {
-    return get(datetime)
+    return getFile(datetime)
       .pipe(entry2JSON())
       .pipe(json2Triple(tripleTransform, 'gdelt:Event'))
       .pipe(new StreamWriter({ prefixes }));
