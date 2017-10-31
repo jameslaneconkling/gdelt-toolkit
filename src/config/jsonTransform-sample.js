@@ -6,7 +6,7 @@
  */
 module.exports = entry => ({
   id: entry.GlobalEventID,
-  day: `${entry.Day.slice(0,4)}-${entry.Day.slice(4,6)}-${entry.Day.slice(6,8)}`,
+  day: `${entry.Day.slice(0, 4)}-${entry.Day.slice(4, 6)}-${entry.Day.slice(6, 8)}`,
   // monthYear: entry.MonthYear,
   // year: entry.Year,
   // fractionDate: entry.FractionDate,
@@ -65,5 +65,5 @@ module.exports = entry => ({
   actionGeo_Long: entry.ActionGeo_Long,
   actionGeo_FeatureID: entry.ActionGeo_FeatureID,
   dateAdded: entry.DATEADDED,
-  sourceURL: entry.SOURCEURL
+  sourceURL: entry.SOURCEURL,
 });

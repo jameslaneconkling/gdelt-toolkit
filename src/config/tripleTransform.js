@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 const cameoTypeCodes = require('../data/cameoTypeCodes');
 const cameoCountryCodes = require('../data/cameoCountryCodes');
 const cameoKnownGroupCodes = require('../data/cameoKnownGroupCodes');
@@ -29,11 +30,15 @@ const literal = (value, type) => {
 };
 
 const formatEventLabel = label => label.replace(/, not specified below$/, '');
-const formatActorLabel = label => label ? label.toLowerCase().replace(/^[a-z]/, c => c.toUpperCase()) : undefined;
-const formatCoordinate = (lat, long) => lat !== undefined && long !== undefined ? `${lat},${long}` : undefined; // TODO - look up geo coordinate type
+const formatActorLabel = label => label ?
+  label.toLowerCase().replace(/^[a-z]/, c => c.toUpperCase()) :
+  undefined;
+const formatCoordinate = (lat, long) => lat !== undefined && long !== undefined ?
+  `${lat},${long}` :
+  undefined; // TODO - look up geo coordinate type
 
 
-module.exports = entry => {
+module.exports = (entry) => {
   const eventURI = `gdelt:${entry.GlobalEventID}`;
   const actor1URI = `gdelt:${uuidv4()}`;
   const actor2URI = `gdelt:${uuidv4()}`;
@@ -44,7 +49,7 @@ module.exports = entry => {
     { subject: eventURI, predicate: 'rdf:type', object: 'gdelt:Event' },
     { subject: eventURI, predicate: 'gdelt:actor1', object: actor1URI },
     { subject: eventURI, predicate: 'gdelt:actor2', object: actor2URI },
-    { subject: eventURI, predicate: 'gdelt:date', object: literal(`${entry.Day.slice(0,4)}-${entry.Day.slice(4,6)}-${entry.Day.slice(6,8)}`, 'xsd:date') },
+    { subject: eventURI, predicate: 'gdelt:date', object: literal(`${entry.Day.slice(0, 4)}-${entry.Day.slice(4, 6)}-${entry.Day.slice(6, 8)}`, 'xsd:date') },
     { subject: eventURI, predicate: 'rdfs:label', object: literal(formatEventLabel(cameoEventCodes[entry.EventCode])) },
     { subject: eventURI, predicate: 'gdelt:goldsteinScale', object: literal(entry.GoldsteinScale, 'xsd:decimal') },
     { subject: eventURI, predicate: 'gdelt:avgTone', object: literal(entry.AvgTone, 'xsd:decimal') },
@@ -54,7 +59,7 @@ module.exports = entry => {
     // TODO - place?
     { subject: placeURI, predicate: 'rdfs:label', object: literal(entry.ActionGeo_Fullname) },
     { subject: placeURI, predicate: 'gdelt:country', object: literal(fipsCountryCodes[entry.ActionGeo_CountryCode]) },
-    { subject: placeURI, predicate: 'gdelt:coordinate', object: literal(formatCoordinate(entry.ActionGeo_Lat,entry.ActionGeo_Long)) },
+    { subject: placeURI, predicate: 'gdelt:coordinate', object: literal(formatCoordinate(entry.ActionGeo_Lat, entry.ActionGeo_Long)) },
 
     // actor1 subject
     { subject: actor1URI, predicate: 'rdf:type', object: 'gdelt:Actor' },

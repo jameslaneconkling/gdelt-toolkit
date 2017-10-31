@@ -2,7 +2,7 @@ const {
   addIndex,
   reduce,
   compose,
-  filter
+  filter,
 } = require('ramda');
 const through = require('through2');
 const fields = require('../data/fields');
@@ -13,7 +13,7 @@ const line2JSON = dropEmptyValues => addIndex(reduce)((out, cellValue, idx) => {
     return out;
   }
 
-  out[fields[idx]] = cellValue;
+  out[fields[idx]] = cellValue; // eslint-disable-line no-param-reassign
   return out;
 }, {});
 
@@ -28,10 +28,10 @@ const line2JSON = dropEmptyValues => addIndex(reduce)((out, cellValue, idx) => {
  *                              })
  * @param {object} [options] { dropEmptyValues: true }
  */
-exports.entry2JSON = (transform = entry => entry, { dropEmptyValues = true } = { dropEmptyValues: true }) =>
+exports.entry2JSON = (transform = x => x, { dropEmptyValues = true } = { dropEmptyValues: true }) =>
   through.obj((line, enc, next) => {
     next(null, compose(
-      filter((value) => value !== undefined),
+      filter(value => value !== undefined),
       transform,
       line2JSON(dropEmptyValues)
     )(line));
@@ -39,11 +39,11 @@ exports.entry2JSON = (transform = entry => entry, { dropEmptyValues = true } = {
 
 
 exports.json2Triple = tripleTransform =>
-  through.obj(function(entry, enc, next) {
+  through.obj(function (entry, enc, next) {
     tripleTransform(entry)
       .forEach(({ subject, predicate, object }) => {
         if (typeof object === 'object' && object.value !== undefined) {
-          this.push({ subject, predicate, object: `${object.value}${object.type ? `^^${object.type}` : ''}`});
+          this.push({ subject, predicate, object: `${object.value}${object.type ? `^^${object.type}` : ''}` });
         } else if (object !== undefined) {
           this.push({ subject, predicate, object });
         }
@@ -54,7 +54,8 @@ exports.json2Triple = tripleTransform =>
 
 
 exports.take = num => through.obj((line, enc, next) => {
-  num -= 1;
+  num -= 1; // eslint-disable-line no-param-reassign
+
   if (num >= 0) {
     return next(null, line);
   }

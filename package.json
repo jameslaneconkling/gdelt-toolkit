@@ -4,7 +4,8 @@
   "description": "tools for streaming, linting, and parsing GDELT data",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./"
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,10 @@
     "unzipper": "^0.8.9",
     "uuid": "^3.1.0",
     "yargs": "^10.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0"
   }
 }

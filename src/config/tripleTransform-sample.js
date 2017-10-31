@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /**
  * example triple transform:
  * - transform 'Day' field to ISO 8601
@@ -8,7 +9,7 @@ const eventURI = ({ GlobalEventID }) => `gdelt:${GlobalEventID}`;
 
 module.exports = entry => ([
   { subject: eventURI(entry), predicate: 'rdf:type', object: 'gdelt:Event' },
-  { subject: eventURI(entry), predicate: 'gdelt:date', object: `${entry.Day.slice(0,4)}-${entry.Day.slice(4,6)}-${entry.Day.slice(6,8)}` },
+  { subject: eventURI(entry), predicate: 'gdelt:date', object: `${entry.Day.slice(0, 4)}-${entry.Day.slice(4, 6)}-${entry.Day.slice(6, 8)}` },
   // { subject: eventURI(entry), predicate: 'gdelt:month-year', object: '' },
   // { subject: eventURI(entry), predicate: 'gdelt:year', object: '' },
   // { subject: eventURI(entry), predicate: 'gdelt:factionDate', object: '' },
@@ -67,5 +68,5 @@ module.exports = entry => ([
   { subject: eventURI(entry), predicate: 'gdelt:actionGeo_Long', object: entry.ActionGeo_Long },
   { subject: eventURI(entry), predicate: 'gdelt:actionGeo_FeatureID', object: entry.ActionGeo_FeatureID },
   { subject: eventURI(entry), predicate: 'gdelt:dateAdded', object: entry.DATEADDED },
-  { subject: eventURI(entry), predicate: 'gdelt:source_url', object: entry.SOURCEURL }
+  { subject: eventURI(entry), predicate: 'gdelt:source_url', object: entry.SOURCEURL },
 ]);

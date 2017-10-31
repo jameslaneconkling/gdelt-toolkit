@@ -1,6 +1,6 @@
 const JSONStream = require('JSONStream');
 const {
-  getFiles
+  getFiles,
 } = require('./lib/get');
 
 

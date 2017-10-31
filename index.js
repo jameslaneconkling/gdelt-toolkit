@@ -4,6 +4,6 @@ module.exports.json2Triple = require('./src/lib/parse').json2Triple;
 module.exports.linter = require('./src/lib/linter');
 module.exports.config = {
   jsonTransform: require('./src/config/jsonTransform'),
-  n3Transform: require('./src/config/n3Transform'),
-  linters: require('./src/config/linters')
+  tripleTransform: require('./src/config/tripleTransform'),
+  linters: require('./src/config/linters'),
 };

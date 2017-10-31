@@ -1,7 +1,7 @@
 const {
   readdir,
   mkdirSync,
-  unlinkSync
+  unlinkSync,
 } = require('fs');
 
 module.exports = () => {
@@ -12,6 +12,6 @@ module.exports = () => {
       return console.error(err);
     }
 
-    files.forEach((file) => file !== '.gitkeep' && unlinkSync(`${__dirname}/../cache/${file}`));
+    files.forEach(file => file !== '.gitkeep' && unlinkSync(`${__dirname}/../cache/${file}`));
   });
 };

@@ -7,13 +7,13 @@ const csvParse = require('csv-parse');
 const BASE_URL = 'http://data.gdeltproject.org/gdeltv2/';
 
 
-exports.getFile = date => {
+exports.getFile = (date) => {
   const fileStream = through.obj();
   const outStream = through.obj();
   const file = `${date}.export.CSV.zip`;
 
   fs.createReadStream(`${__dirname}/../../cache/${file}`)
-    .on('error', error => {
+    .on('error', (error) => {
       if (error.code === 'ENOENT') {
         // cache miss
         const fileRequestStream = hyperquest.get(BASE_URL + file)
@@ -22,7 +22,7 @@ exports.getFile = date => {
               throw new Error(`Error downloading from ${BASE_URL}${file}: ${statusCode} ${statusMessage}`);
             }
           })
-          .on('error', error => console.error(error));
+          .on('error', requestError => console.error(requestError));
 
         // write to cache
         fileRequestStream.pipe(fs.createWriteStream(`${__dirname}/../../cache/${file}`));
@@ -42,19 +42,18 @@ exports.getFile = date => {
         .on('error', err => outStream.destroy(err))
         .on('finish', next)
         .pipe(csvParse({ delimiter: '\t' }))
-        .pipe(outStream)
-    ));
+        .pipe(outStream)));
 
   return outStream;
 };
 
 
-exports.getFiles = () => {
-  return hyperquest.get('http://data.gdeltproject.org/gdeltv2/masterfilelist.txt')
+exports.getFiles = () => (
+  hyperquest.get('http://data.gdeltproject.org/gdeltv2/masterfilelist.txt')
     .pipe(split())
-    .pipe(through.obj(function(chunk, enc, next) {
+    .pipe(through.obj((chunk, enc, next) => {
       const [id, checksum, url] = chunk.split(' ');
 
       next(null, { id, checksum, url }); // TODO - format datetime
-    }));
-};
+    }))
+);

@@ -1,15 +1,15 @@
 const JSONStream = require('JSONStream');
 const {
-  getFile
+  getFile,
 } = require('./lib/get');
 const {
-  entry2JSON
+  entry2JSON,
 } = require('./lib/parse');
 const linter = require('./lib/linter');
 const linters = require('./config/linters');
 const {
   getUTCDate,
-  utcDate2GDELTDate
+  utcDate2GDELTDate,
 } = require('./utils/datetime');
 
 

@@ -2,18 +2,20 @@ const through = require('through2');
 const fields = require('../data/fields');
 
 
-const runLinter = (linters, entry) => field => {
+const runLinter = (linters, entry) => (field) => {
   const lintError = linters[field](entry[field], entry);
 
   if (lintError) {
-    return { id: entry.GlobalEventID, field, value: entry[field], message: lintError };
+    return {
+      id: entry.GlobalEventID, field, value: entry[field], message: lintError,
+    };
   }
 
   return false;
 };
 
 
-const validateLinters = linters => {
+const validateLinters = (linters) => {
   const fieldsMap = fields.reduce((acc, field) => {
     acc[field] = true;
     return acc;
@@ -27,10 +29,10 @@ const validateLinters = linters => {
 };
 
 
-module.exports = linters => {
+module.exports = (linters) => {
   validateLinters(linters);
 
-  return through.obj(function(entry, enc, next) {
+  return through.obj(function (entry, enc, next) {
     Object.keys(entry)
       .filter(field => linters[field])
       .map(runLinter(linters, entry))
