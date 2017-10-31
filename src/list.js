@@ -1,9 +1,9 @@
 const JSONStream = require('JSONStream');
 const {
-  getFiles,
+  getFileList,
 } = require('./lib/get');
 
 
 module.exports = () =>
-  getFiles()
+  getFileList()
     .pipe(JSONStream.stringify('[', ',\n', ']', 2));

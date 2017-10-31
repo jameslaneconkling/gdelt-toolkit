@@ -7,25 +7,23 @@ const csvParse = require('csv-parse');
 const BASE_URL = 'http://data.gdeltproject.org/gdeltv2/';
 
 
-exports.getFile = (date) => {
+const getCachedResource = (file, baseURL, cachePath) => {
   const fileStream = through.obj();
-  const outStream = through.obj();
-  const file = `${date}.export.CSV.zip`;
 
-  fs.createReadStream(`${__dirname}/../../cache/${file}`)
+  fs.createReadStream(`${cachePath}/${file}`)
     .on('error', (error) => {
       if (error.code === 'ENOENT') {
         // cache miss
-        const fileRequestStream = hyperquest.get(BASE_URL + file)
+        const fileRequestStream = hyperquest.get(baseURL + file)
           .on('response', ({ statusCode, statusMessage }) => {
             if (statusCode >= 400) {
-              throw new Error(`Error downloading from ${BASE_URL}${file}: ${statusCode} ${statusMessage}`);
+              throw new Error(`Error downloading from ${baseURL}${file}: ${statusCode} ${statusMessage}`);
             }
           })
           .on('error', requestError => console.error(requestError));
 
         // write to cache
-        fileRequestStream.pipe(fs.createWriteStream(`${__dirname}/../../cache/${file}`));
+        fileRequestStream.pipe(fs.createWriteStream(`${cachePath}/${file}`));
 
         // pipe to program
         fileRequestStream.pipe(fileStream);
@@ -35,7 +33,15 @@ exports.getFile = (date) => {
     })
     .pipe(fileStream);
 
-  fileStream
+  return fileStream;
+};
+
+
+exports.getFile = (date) => {
+  const outStream = through.obj();
+
+
+  getCachedResource(`${date}.export.CSV.zip`, BASE_URL, `${__dirname}/../../cache`)
     .pipe(unzipper.Parse())
     .pipe(through.obj((entry, enc, next) =>
       entry
@@ -48,8 +54,8 @@ exports.getFile = (date) => {
 };
 
 
-exports.getFiles = () => (
-  hyperquest.get('http://data.gdeltproject.org/gdeltv2/masterfilelist.txt')
+exports.getFileList = () => (
+  getCachedResource('masterfilelist.txt', BASE_URL, `${__dirname}/../../cache`)
     .pipe(split())
     .pipe(through.obj((chunk, enc, next) => {
       const [id, checksum, url] = chunk.split(' ');
