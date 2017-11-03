@@ -16,6 +16,7 @@ Commands:
   gdelt clean     clean cache
 ```
 
+
 **Download**
 
 Download GDELT file and ouput as `JSON` or `N3` for specified UTC datetime (ISO-8601).  GDELT files are published on the hour at 15min intervals; omitting the datetime arg will download the first file of the day.  Downloads are cached locally.
@@ -23,12 +24,14 @@ Download GDELT file and ouput as `JSON` or `N3` for specified UTC datetime (ISO-
 Default rules for parsing GDELT tsv files are defined for [JSON](https://github.com/jameslaneconkling/gdelt-toolkit/blob/master/config/jsonTransform.js) and [N3](https://github.com/jameslaneconkling/gdelt-toolkit/blob/master/config/tripleTransform.js).
 
 ```bash
-gdelt download [-d YYYY-MM-DD | YYYY-MM-DDThh:mm] [-f]
+gdelt download [-d YYYY-MM-DD | YYYY-MM-DDThh:mm] [-f] [--cachePath]
 
 Options:
   --datetime, -d  datetime          [defaults to today]
   --format,   -f  output format     [choices: "json", "n3"] [default: "json"]
+  --cachePath     path to cache     [defaults to internal module cache]
 ```
+
 
 **Lint**
 
@@ -37,11 +40,25 @@ Lint GDELT file for specified UTC datetime (ISO-8601), outputting linting errors
 Default linting rules are defined [here](https://github.com/jameslaneconkling/gdelt-toolkit/blob/master/config/linters.js).
 
 ```bash
-gdelt download [-d YYYY-MM-DD | YYYY-MM-DDThh:mm]
+gdelt download [-d YYYY-MM-DD | YYYY-MM-DDThh:mm] [--cachePath]
 
 Options:
-  --datetime, -d  datetime         [default to today]
+  --datetime, -d  datetime          [default to today]
+  --cachePath     path to cache     [defaults to internal module cache]
 ```
+
+
+**List**
+
+List all available GDELT files, outputting a `JSON` list of each file url, size, and checksum.
+
+```bash
+gdelt list [--cachePath]
+
+Options:
+  --cachePath     path to cache     [defaults to internal module cache]
+```
+
 
 **Clean Cache**
 
@@ -51,7 +68,8 @@ Clear cache of downloaded GDELT files.
 ```bash
 gdelt clean
 
-clean cache
+clean cache [--cachePath]
 
-Options: [none]
+Options:
+  --cachePath     path to cache     [defaults to internal module cache]
 ```
