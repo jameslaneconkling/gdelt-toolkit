@@ -8,12 +8,16 @@ const {
 const linter = require('./lib/linter');
 const linters = require('./config/linters');
 const {
-  getUTCDate,
-  utcDate2GDELTDate,
-} = require('./utils/datetime');
+  defaultDatetime,
+  defaultCachePath,
+} = require('./utils/defaults');
 
 
-module.exports = ({ datetime = utcDate2GDELTDate(getUTCDate()) }) => getFile(datetime)
-  .pipe(entry2JSON())
-  .pipe(linter(linters))
-  .pipe(JSONStream.stringify('[', ',\n', ']'));
+module.exports = ({
+  datetime = defaultDatetime(),
+  cachePath = defaultCachePath,
+}) =>
+  getFile(datetime, cachePath)
+    .pipe(entry2JSON())
+    .pipe(linter(linters))
+    .pipe(JSONStream.stringify('[', ',\n', ']'));

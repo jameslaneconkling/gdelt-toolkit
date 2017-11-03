@@ -7,7 +7,7 @@ const list = require('../src/list');
 
 const datetime = {
   alias: 'd',
-  describe: 'datetime [defaults to today]',
+  describe: 'datetime             [defaults to today]',
 };
 const format = {
   alias: 'f',
@@ -15,31 +15,34 @@ const format = {
   default: 'json',
   describe: 'output format',
 };
+const cachePath = {
+  describe: 'path to cache        [defaults to internal module cache]',
+};
 
 
 require('yargs')
   .usage('$0 <cmd> [args]')
   .command(
     'download', 'download gdelt by datetime',
-    { datetime, format },
+    { datetime, format, cachePath },
     argv => download(argv).pipe(process.stdout)
   )
   .command(
     'lint',
     'lint gdelt by datetime',
-    { datetime },
+    { datetime, cachePath },
     argv => lint(argv).pipe(process.stdout)
   )
   .command(
     'list',
     'list all available gdelt files',
-    {},
+    { cachePath },
     argv => list(argv).pipe(process.stdout)
   )
   .command(
     'clean',
     'clean cache',
-    {},
+    { cachePath },
     require('../src/clean')
   )
   .demand(1, 'Please specify a command')

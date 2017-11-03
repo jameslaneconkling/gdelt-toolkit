@@ -13,18 +13,22 @@ const prefixes = require('./config/rdfPrefixes');
 const jsonTransform = require('./config/jsonTransform');
 const tripleTransform = require('./config/tripleTransform');
 const {
-  getUTCDate,
-  utcDate2GDELTDate,
-} = require('./utils/datetime');
+  defaultDatetime,
+  defaultCachePath,
+} = require('./utils/defaults');
 
 
-module.exports = ({ format, datetime = utcDate2GDELTDate(getUTCDate()) }) => {
+module.exports = ({
+  format,
+  datetime = defaultDatetime(),
+  cachePath = defaultCachePath,
+}) => {
   if (format === 'json') {
-    return getFile(datetime)
+    return getFile(datetime, cachePath)
       .pipe(entry2JSON(jsonTransform))
       .pipe(JSONStream.stringify('[', ',\n', ']', 2));
   } else if (format === 'n3') {
-    return getFile(datetime)
+    return getFile(datetime, cachePath)
       .pipe(entry2JSON())
       .pipe(json2Triple(tripleTransform, 'gdelt:Event'))
       .pipe(new StreamWriter({ prefixes }));

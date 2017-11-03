@@ -1,17 +1,22 @@
+const path = require('path');
 const {
   readdir,
   mkdirSync,
   unlinkSync,
 } = require('fs');
+const {
+  defaultCachePath,
+} = require('./utils/defaults');
 
-module.exports = () => {
-  readdir(`${__dirname}/../cache/`, (err, files) => {
+
+module.exports = ({ cachePath = defaultCachePath }) => {
+  readdir(cachePath, (err, files) => {
     if (err && err.code === 'ENOENT') {
-      return mkdirSync(`${__dirname}/../cache/`);
+      return mkdirSync(cachePath);
     } else if (err) {
       return console.error(err);
     }
 
-    files.forEach(file => file !== '.gitkeep' && unlinkSync(`${__dirname}/../cache/${file}`));
+    files.forEach(file => file !== '.gitkeep' && unlinkSync(path.resolve(cachePath, file)));
   });
 };
