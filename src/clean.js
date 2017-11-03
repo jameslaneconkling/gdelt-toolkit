@@ -1,7 +1,6 @@
 const path = require('path');
 const {
   readdir,
-  mkdirSync,
   unlinkSync,
 } = require('fs');
 const {
@@ -12,11 +11,12 @@ const {
 module.exports = ({ cachePath = defaultCachePath }) => {
   readdir(cachePath, (err, files) => {
     if (err && err.code === 'ENOENT') {
-      return mkdirSync(cachePath);
+      return console.log('cache doesn\'t exist');
     } else if (err) {
       return console.error(err);
     }
 
     files.forEach(file => file !== '.gitkeep' && unlinkSync(path.resolve(cachePath, file)));
+    console.log('success');
   });
 };

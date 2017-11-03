@@ -3,6 +3,7 @@ const url = require('url');
 const {
   unlinkSync,
 } = require('fs');
+const mkdirp = require('mkdirp');
 const hyperquest = require('hyperquest');
 const fs = require('fs');
 const through = require('through2');
@@ -19,9 +20,13 @@ const getCachedResource = (file, baseURL, cachePath) => {
   const filePath = path.resolve(cachePath, file);
   const fileStream = through.obj();
 
+  mkdirp.sync(cachePath);
+
   fs.createReadStream(filePath)
     .on('error', (error) => {
-      if (error.code === 'ENOENT') {
+      if (error.code === '') {
+        console.log('make dir');
+      } else if (error.code === 'ENOENT') {
         // cache miss
         hyperquest.get(url.resolve(baseURL, file))
           .on('response', function ({ statusCode, statusMessage }) {
