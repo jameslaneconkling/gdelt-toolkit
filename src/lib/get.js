@@ -99,8 +99,8 @@ exports.getFileList = (cachePath = defaultCachePath) => (
   )
     .pipe(split())
     .pipe(through.obj((chunk, enc, next) => {
-      const [id, checksum, fileURL] = chunk.split(' ');
+      const [size, checksum, fileURL] = chunk.split(' ');
 
-      next(null, { id, checksum, url: fileURL }); // TODO - format datetime
+      next(null, { size, checksum, url: fileURL }); // TODO - format datetime
     }))
 );
