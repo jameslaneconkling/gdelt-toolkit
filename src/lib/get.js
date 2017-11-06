@@ -13,36 +13,40 @@ const csvParse = require('csv-parse');
 const {
   defaultCachePath,
 } = require('../utils/defaults');
+const {
+  parseDateTime,
+} = require('../utils/datetime');
 const BASE_URL = 'http://data.gdeltproject.org/gdeltv2/';
 
 
 const getCachedResource = (file, baseURL, cachePath) => {
-  const filePath = path.resolve(cachePath, file);
+  const localFilePath = path.resolve(cachePath, file);
+  const remoteFileUrl = url.resolve(baseURL, file);
   const fileStream = through.obj();
 
   mkdirp.sync(cachePath);
 
-  fs.createReadStream(filePath)
+  fs.createReadStream(localFilePath)
     .on('error', (error) => {
       if (error.code === '') {
         console.log('make dir');
       } else if (error.code === 'ENOENT') {
         // cache miss
-        hyperquest.get(url.resolve(baseURL, file))
+        hyperquest.get(remoteFileUrl)
           .on('response', function ({ statusCode, statusMessage }) {
             if (statusCode >= 400) {
-              throw new Error(`Error downloading ${url.resolve(baseURL, file)}: ${statusCode} ${statusMessage}`);
+              throw new Error(`Error downloading ${remoteFileUrl}: ${statusCode} ${statusMessage}`);
             }
 
             // write to cache
-            this.pipe(fs.createWriteStream(filePath));
+            this.pipe(fs.createWriteStream(localFilePath));
 
             // pipe to program
             this.pipe(fileStream);
           })
           .on('error', (requestError) => {
             // TODO - confirm this actually runs/cleans up file from cache if there's an error downloading file
-            unlinkSync(filePath);
+            unlinkSync(localFilePath);
             console.error(requestError);
           });
       } else {
@@ -73,12 +77,12 @@ const getRemoteResource = (file, baseURL) => {
 };
 
 
-exports.getFile = (date, cachePath = defaultCachePath) => {
+exports.getFile = (datetime, cachePath = defaultCachePath) => {
   const outStream = through.obj();
 
   (cachePath ?
-    getCachedResource(`${date}.export.CSV.zip`, BASE_URL, cachePath) :
-    getRemoteResource(`${date}.export.CSV.zip`, BASE_URL)
+    getCachedResource(`${parseDateTime(datetime)}.export.CSV.zip`, BASE_URL, cachePath) :
+    getRemoteResource(`${parseDateTime(datetime)}.export.CSV.zip`, BASE_URL)
   )
     .pipe(unzipper.Parse())
     .pipe(through.obj((entry, enc, next) =>

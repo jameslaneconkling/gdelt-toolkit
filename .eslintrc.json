@@ -18,6 +18,7 @@
         "imports": "always",
         "exports": "always",
         "functions": "ignore"
-      }]
+      }],
+      "no-multi-assign": 0
     }
 }
